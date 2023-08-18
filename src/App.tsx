@@ -33,7 +33,7 @@ function App() {
     fm?.enableFeature(WebXRBackgroundRemover);
 
     // This creates and positions a arc rotate camera
-    const camera = new ArcRotateCamera("Camera", 3, 1, 200, Vector3.Zero(), scene);
+    const camera = new ArcRotateCamera("Camera", 3, 1, 500, Vector3.Zero(), scene);
   
     // This attaches the camera to the canva
     camera.attachControl(canvas, true);

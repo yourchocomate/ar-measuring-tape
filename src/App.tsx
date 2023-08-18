@@ -6,6 +6,8 @@ import * as BABYLON from "babylonjs-hook";
 function App() {
 
   const Baby = BABYLON.default;
+  const engine = BABYLON.useEngine();
+  engine?.setHardwareScalingLevel(0.5);
 
   const onSceneReady = async(scene: Scene) => {
 
@@ -44,10 +46,8 @@ function App() {
     // Default intensity is 1. Let's dim the light a small amount
     const result = await SceneLoader.ImportMeshAsync(null, "./models/", "Buggy.gltf", scene);
     const buggy = result.meshes[0];
-    // buggy.scaling = new Vector3(0.5,0.5,0.5);
+    buggy.scaling = new Vector3(0.2,0.2,0.2);
     camera.setTarget(buggy);
-
-
   };
   
   /**

@@ -1,4 +1,4 @@
-import { ArcRotateCamera, Vector3, HemisphericLight,  Scene, SceneLoader } from '@babylonjs/core';
+import { ArcRotateCamera, Vector3, HemisphericLight, Scene, SceneLoader, WebXRBackgroundRemover } from '@babylonjs/core';
 import "@babylonjs/loaders/glTF";
 import './App.css'
 import * as BABYLON from "babylonjs-hook";
@@ -10,6 +10,25 @@ function App() {
   const onSceneReady = async(scene: Scene) => {
 
     const canvas = scene.getEngine().getRenderingCanvas();
+    let xr;
+    try {
+      xr = await scene.createDefaultXRExperienceAsync({
+        // ask for an ar-session
+        uiOptions: {
+          sessionMode: "immersive-ar",
+        },
+      });
+    } catch (e) {
+      console.log((e as Error).message)
+    }
+  
+    if(!xr?.baseExperience) {
+      console.log("Not Supported")
+    }
+
+    const fm = xr?.baseExperience.featuresManager;
+
+    fm?.enableFeature(WebXRBackgroundRemover);
 
     // This creates and positions a arc rotate camera
     const camera = new ArcRotateCamera("Camera", 3, 1, 200, Vector3.Zero(), scene);
@@ -27,27 +46,15 @@ function App() {
     const buggy = result.meshes[0];
     // buggy.scaling = new Vector3(0.5,0.5,0.5);
     camera.setTarget(buggy);
+
+
   };
   
   /**
    * Will run on every frame render.  We are spinning the box on y-axis.
    */
-  const onRender = async(scene: Scene) => {
-    let xr;
-    try {
-      xr = await scene.createDefaultXRExperienceAsync({
-        // ask for an ar-session
-        // uiOptions: {
-        //   sessionMode: "immersive-ar",
-        // },
-      });
-    } catch (e) {
-      console.log((e as Error).message)
-    }
-  
-    if(!xr?.baseExperience) {
-      console.log("Not Supported")
-    }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onRender = async(_scene: Scene) => {
   };
 
   return (

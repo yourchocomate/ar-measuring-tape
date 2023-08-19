@@ -276,8 +276,7 @@ function App() {
     <>
       <Baby antialias onSceneReady={onSceneReady} onRender={onRender} style={{
         height: "100%",
-        width: "100%",
-        outline: "none"
+        width: "100%"
       }} />
     </>
   )
